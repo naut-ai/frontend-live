@@ -19,7 +19,7 @@ export default function Video({ apiKeys }) {
 
   function showVideo(id) {
     const talk_id = id;
-    fetch("https://nautai-backend.onrender.com/get_video", {
+    fetch("http://127.0.0.1:8000/get_video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ talk_id, apiKeys }),
@@ -58,7 +58,7 @@ export default function Video({ apiKeys }) {
       loadingText: "Generating video...",
     });
     try {
-      fetch("https://nautai-backend.onrender.com/ask_video", {
+      fetch("http://127.0.0.1:8000/ask_video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, apiKeys }),
@@ -67,22 +67,29 @@ export default function Video({ apiKeys }) {
         .then((data) => {
           if (data.message) {
             toast.error(data.message);
+            setVideo({
+              ...video,
+              id: "",
+              src: "",
+              title: "",
+            });
             setLoading({
               isLoading: false,
               loadingText: "",
               isLoaded: true,
             });
             setDisabled(false);
+          } else {
+            setLoading({
+              ...loading,
+              isLoaded: false,
+              isLoading: true,
+              loadingText: "Rendering video...",
+            });
+            setTimeout(() => {
+              showVideo(data.video_id);
+            }, 20000);
           }
-          setLoading({
-            ...loading,
-            isLoaded: false,
-            isLoading: true,
-            loadingText: "Rendering video...",
-          });
-          setTimeout(() => {
-            showVideo(data.video_id);
-          }, 20000);
         })
         .catch((err) => {
           console.log(err);
