@@ -19,7 +19,7 @@ export default function Video({ apiKeys }) {
 
   function showVideo(id) {
     const talk_id = id;
-    fetch("http://127.0.0.1:8000/get_video", {
+    fetch("https://nautai-backend.onrender.com/get_video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ talk_id, apiKeys }),
@@ -58,7 +58,7 @@ export default function Video({ apiKeys }) {
       loadingText: "Generating video...",
     });
     try {
-      fetch("http://127.0.0.1:8000/ask_video", {
+      fetch("https://nautai-backend.onrender.com/ask_video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, apiKeys }),
