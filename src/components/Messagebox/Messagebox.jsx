@@ -52,14 +52,25 @@ function Messagebox({ video, loading }) {
                   <video
                     src={video.src}
                     controls
-                    controlsList="nodownload nofullscreen"
+                    controlsList="nodownload"
                     disablePictureInPicture
                     onContextMenu={(e) => e.preventDefault()}
                     autoPlay
+                    crossOrigin="anonymous"
                     style={{
                       objectFit: "cover",
                     }}
-                  ></video>
+                  >
+                    {video.subtitle && (
+                      <track
+                        src={video.subtitle}
+                        kind="subtitles"
+                        srclang="en"
+                        label="English"
+                        default
+                      />
+                    )}
+                  </video>
                 )}
               </AspectRatio>
             </Flex>

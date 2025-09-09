@@ -1,4 +1,3 @@
-import { Text } from "@chakra-ui/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import InputBox from "../components/Inputbox/InputBox";
@@ -8,6 +7,7 @@ export default function Video({ apiKeys }) {
     id: "",
     title: "",
     src: "",
+    subtitle: "",
   });
   const [loading, setLoading] = useState({
     isLoading: false,
@@ -16,7 +16,7 @@ export default function Video({ apiKeys }) {
   });
   const [prompt, setPrompt] = useState("");
   const [disabled, setDisabled] = useState(false);
-
+  //TODO: add backend url
   function showVideo(id) {
     const talk_id = id;
     fetch("https://nautai-backend.onrender.com/get_video", {
@@ -31,6 +31,7 @@ export default function Video({ apiKeys }) {
           id: talk_id,
           src: data.video_url,
           title: data.video_title,
+          subtitle: data.subtitle_url,
         });
         console.log(video);
         setLoading({
@@ -49,6 +50,7 @@ export default function Video({ apiKeys }) {
       id: "",
       src: "",
       title: "",
+      subtitle: "",
     });
     setDisabled(true);
     setLoading({
@@ -72,6 +74,7 @@ export default function Video({ apiKeys }) {
               id: "",
               src: "",
               title: "",
+              subtitle: "",
             });
             setLoading({
               isLoading: false,
