@@ -16,8 +16,11 @@ export default function Video({ apiKeys }) {
   });
   const [prompt, setPrompt] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [time, setTime] = useState("s");
+  const [timeTaken, setTimeTaken] = useState("");
   //TODO: add backend url
-  function showVideo(id) {
+  function showVideo(id, timer) {
     const talk_id = id;
     fetch("https://nautai-backend.onrender.com/get_video", {
       method: "POST",
@@ -34,6 +37,7 @@ export default function Video({ apiKeys }) {
           subtitle: data.subtitle_url,
         });
         console.log(video);
+        clearInterval(timer);
         setLoading({
           ...loading,
           isLoaded: true,
@@ -43,6 +47,19 @@ export default function Video({ apiKeys }) {
         setDisabled(false);
       });
   }
+
+  const timer = () => {
+    if (timeTaken == "60s") {
+      setTime(`m`);
+      setCounter(0);
+    } else if (timeTaken == "60m") {
+      setTime(`hr`);
+      setCounter(0);
+    }
+    setCounter((prev) => prev + 1);
+    setTimeTaken(`${counter}${time}`);
+    console.log(timeTaken);
+  };
 
   function askVideo(question) {
     setVideo({
@@ -59,6 +76,9 @@ export default function Video({ apiKeys }) {
       isLoading: true,
       loadingText: "Generating video...",
     });
+
+    let generationTimer = setInterval(timer, 1000);
+
     try {
       fetch("https://nautai-backend.onrender.com/ask_video", {
         method: "POST",
@@ -90,15 +110,17 @@ export default function Video({ apiKeys }) {
               loadingText: "Rendering video...",
             });
             setTimeout(() => {
-              showVideo(data.video_id);
+              showVideo(data.video_id, generationTimer);
             }, 20000);
           }
         })
         .catch((err) => {
           console.log(err);
+          clearInterval(generationTimer);
         });
     } catch (err) {
       console.log(err);
+      clearInterval(generationTimer);
       toast.error("Server Connection failed!");
     }
   }
@@ -109,18 +131,14 @@ export default function Video({ apiKeys }) {
 
   return (
     <>
-      <div>
-        <Messagebox video={video} loading={loading} />
-      </div>
-      <div>
-        <InputBox
-          prompt={prompt}
-          handleSubmit={handleData}
-          setPrompt={setPrompt}
-          loading={loading}
-          disabled={disabled}
-        />
-      </div>
+      <Messagebox video={video} loading={loading} timeTaken={timeTaken} />
+      <InputBox
+        prompt={prompt}
+        handleSubmit={handleData}
+        setPrompt={setPrompt}
+        loading={loading}
+        disabled={disabled}
+      />
     </>
   );
 }

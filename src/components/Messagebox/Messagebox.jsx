@@ -10,10 +10,10 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import React from "react";
 
-function Messagebox({ video, loading }) {
+function Messagebox({ video, loading, timeTaken }) {
   const { colorMode } = useColorMode();
+
   return (
     <Center>
       <Container maxW="container.md">
@@ -46,7 +46,7 @@ function Messagebox({ video, loading }) {
               <AspectRatio w={"100%"} ratio={video.src === "" ? 16 / 9 : 1}>
                 {video.src === "" ? (
                   <Text fontWeight="bold" fontSize="lg" fontFamily={"Inter"}>
-                    No Videos? Create one!
+                    Study the way you like!
                   </Text>
                 ) : (
                   <video
@@ -87,7 +87,7 @@ function Messagebox({ video, loading }) {
             fontFamily={"Poppins"}
           >
             <Spinner mx={2} marginBottom={"-5px"} position={"relative"} />
-            {loading.loadingText}
+            {`${loading.loadingText}(${timeTaken})`}
           </Text>
         )}
       </Container>
