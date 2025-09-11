@@ -8,6 +8,7 @@ export default function Video({ apiKeys }) {
     title: "",
     src: "",
     subtitle: "",
+    content: "",
   });
   const [loading, setLoading] = useState({
     isLoading: false,
@@ -16,13 +17,10 @@ export default function Video({ apiKeys }) {
   });
   const [prompt, setPrompt] = useState("");
   const [disabled, setDisabled] = useState(false);
-  const [counter, setCounter] = useState(0);
-  const [time, setTime] = useState("s");
-  const [timeTaken, setTimeTaken] = useState("");
   //TODO: add backend url
-  function showVideo(id, timer) {
+  function showVideo(id) {
     const talk_id = id;
-    fetch("https://nautai-backend.onrender.com/get_video", {
+    fetch("http://127.0.0.1:8000/get_video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ talk_id, apiKeys }),
@@ -35,9 +33,9 @@ export default function Video({ apiKeys }) {
           src: data.video_url,
           title: data.video_title,
           subtitle: data.subtitle_url,
+          content: data.video_content,
         });
         console.log(video);
-        clearInterval(timer);
         setLoading({
           ...loading,
           isLoaded: true,
@@ -48,19 +46,6 @@ export default function Video({ apiKeys }) {
       });
   }
 
-  const timer = () => {
-    if (timeTaken == "60s") {
-      setTime(`m`);
-      setCounter(0);
-    } else if (timeTaken == "60m") {
-      setTime(`hr`);
-      setCounter(0);
-    }
-    setCounter((prev) => prev + 1);
-    setTimeTaken(`${counter}${time}`);
-    console.log(timeTaken);
-  };
-
   function askVideo(question) {
     setVideo({
       ...video,
@@ -68,6 +53,7 @@ export default function Video({ apiKeys }) {
       src: "",
       title: "",
       subtitle: "",
+      content: "",
     });
     setDisabled(true);
     setLoading({
@@ -77,10 +63,8 @@ export default function Video({ apiKeys }) {
       loadingText: "Generating video...",
     });
 
-    let generationTimer = setInterval(timer, 1000);
-
     try {
-      fetch("https://nautai-backend.onrender.com/ask_video", {
+      fetch("http://127.0.0.1:8000/ask_video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, apiKeys }),
@@ -95,6 +79,7 @@ export default function Video({ apiKeys }) {
               src: "",
               title: "",
               subtitle: "",
+              content: "",
             });
             setLoading({
               isLoading: false,
@@ -110,17 +95,15 @@ export default function Video({ apiKeys }) {
               loadingText: "Rendering video...",
             });
             setTimeout(() => {
-              showVideo(data.video_id, generationTimer);
+              showVideo(data.video_id);
             }, 20000);
           }
         })
         .catch((err) => {
           console.log(err);
-          clearInterval(generationTimer);
         });
     } catch (err) {
       console.log(err);
-      clearInterval(generationTimer);
       toast.error("Server Connection failed!");
     }
   }
@@ -131,7 +114,7 @@ export default function Video({ apiKeys }) {
 
   return (
     <>
-      <Messagebox video={video} loading={loading} timeTaken={timeTaken} />
+      <Messagebox video={video} loading={loading} />
       <InputBox
         prompt={prompt}
         handleSubmit={handleData}
