@@ -20,12 +20,12 @@ const Settings = ({ apiKeys, setApiKeys }) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setDidKey(apiKeys.didApiKey || "");
+    setDidKey(apiKeys.heygenApiKey || "");
   }, [apiKeys]);
 
   const handleSaveCredentials = () => {
     const newKeys = {
-      didApiKey: didKey,
+      heygenApiKey: didKey,
     };
     setApiKeys(newKeys);
     localStorage.setItem("apiKeys", JSON.stringify(newKeys));
@@ -58,12 +58,12 @@ const Settings = ({ apiKeys, setApiKeys }) => {
               </Button>
             </Flex>
             <Text fontSize={"2xl"} fontWeight={"semibold"}>
-              D-ID
+              HeyGen
             </Text>
             <Flex justify={"center"} align={"center"} height={"10vh"}>
               <Input
                 fontFamily={"Inter"}
-                placeholder="D-ID API Key"
+                placeholder="HeyGen API Key"
                 value={didKey}
                 size={"lg"}
                 disabled={disabled}

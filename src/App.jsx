@@ -8,9 +8,7 @@ import Video from "./pages/Video.jsx";
 
 function App() {
   const [apiKeys, setApiKeys] = useState({
-    didApiKey: "",
-    elevenlabsApiKey: "",
-    geminiApiKey: "",
+    heygenApiKey: "",
   });
 
   useEffect(() => {

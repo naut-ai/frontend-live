@@ -9,6 +9,7 @@ export default function Video({ apiKeys }) {
     src: "",
     subtitle: "",
     content: "",
+    metadata: "",
   });
   const [loading, setLoading] = useState({
     isLoading: false,
@@ -20,7 +21,7 @@ export default function Video({ apiKeys }) {
   //TODO: add backend url
   function showVideo(id) {
     const talk_id = id;
-    fetch("https://nautai-backend.onrender.com/get_video", {
+    fetch("http://127.0.0.1:8000/get_video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ talk_id, apiKeys }),
@@ -34,6 +35,7 @@ export default function Video({ apiKeys }) {
           title: data.video_title,
           subtitle: data.subtitle_url,
           content: data.video_content,
+          metadata: data.metadata,
         });
         console.log(video);
         setLoading({
@@ -54,6 +56,7 @@ export default function Video({ apiKeys }) {
       title: "",
       subtitle: "",
       content: "",
+      metadata: "",
     });
     setDisabled(true);
     setLoading({
@@ -64,7 +67,7 @@ export default function Video({ apiKeys }) {
     });
 
     try {
-      fetch("https://nautai-backend.onrender.com/ask_video", {
+      fetch("http://127.0.0.1:8000/ask_video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, apiKeys }),
@@ -80,6 +83,7 @@ export default function Video({ apiKeys }) {
               title: "",
               subtitle: "",
               content: "",
+              metadata: "",
             });
             setLoading({
               isLoading: false,
@@ -92,7 +96,7 @@ export default function Video({ apiKeys }) {
               ...loading,
               isLoaded: false,
               isLoading: true,
-              loadingText: "Rendering video...",
+              loadingText: "Processing video...",
             });
             setTimeout(() => {
               showVideo(data.video_id);
@@ -104,7 +108,7 @@ export default function Video({ apiKeys }) {
         });
     } catch (err) {
       console.log(err);
-      toast.error("Server Connection failed!");
+      toast.error("Backend Connection failed!");
     }
   }
 

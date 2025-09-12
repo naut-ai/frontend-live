@@ -6,6 +6,7 @@ import {
   Center,
   Container,
   Flex,
+  Icon,
   Skeleton,
   Spinner,
   Tab,
@@ -16,6 +17,7 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
+import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -87,10 +89,15 @@ function Messagebox({ video, loading }) {
               </TabList>
               <TabPanels>
                 <TabPanel>
-                  <Flex justify={"center"} marginTop={"10px"}>
+                  <Flex
+                    justify={"center"}
+                    marginTop={"10px"}
+                    flexDirection={"column"}
+                  >
                     <AspectRatio
-                      w={"100%"}
-                      ratio={video.src === "" ? 16 / 9 : 1}
+                      maxWidth={"1280px"}
+                      maxHeight={"720px"}
+                      ratio={16 / 9}
                     >
                       {video.src === "" ? (
                         <Text
@@ -107,7 +114,7 @@ function Messagebox({ video, loading }) {
                           controlsList="nodownload"
                           disablePictureInPicture
                           onContextMenu={(e) => e.preventDefault()}
-                          autoPlay
+                          poster={video.metadata.thumbnail_url}
                           crossOrigin="anonymous"
                           style={{
                             objectFit: "cover",
@@ -125,6 +132,23 @@ function Messagebox({ video, loading }) {
                         </video>
                       )}
                     </AspectRatio>
+                    {video.src && (
+                      <a
+                        href={video.src}
+                        download={video.title}
+                        className="mt-5 self-end"
+                      >
+                        <Button
+                          borderRadius={"full"}
+                          alignSelf={"flex-end"}
+                          colorScheme="purple"
+                          fontFamily={"Inter"}
+                        >
+                          <Icon as={Download} marginRight={2} />
+                          Download Video
+                        </Button>
+                      </a>
+                    )}
                   </Flex>
                 </TabPanel>
                 <TabPanel>

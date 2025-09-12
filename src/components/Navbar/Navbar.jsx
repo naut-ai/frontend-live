@@ -20,7 +20,7 @@ function Navbar() {
     <Container maxW="container.md" marginTop={10}>
       <Box>
         <Flex gap={3}>
-          <Link to={"/"}>
+          <Link to={"/"} viewTransition>
             <Flex gap={1}>
               <Avatar
                 p={1}
@@ -39,13 +39,13 @@ function Navbar() {
             </Flex>
           </Link>
           <Spacer />
-          <Link to={"/video/create"}>
+          <Link to={"/video/create"} viewTransition>
             <Button borderRadius={"full"} colorScheme="purple">
               <Icon as={Video} marginRight={2} />
               Create Video
             </Button>
           </Link>
-          <Link to={"/video/settings"}>
+          <Link to={"/video/settings"} viewTransition>
             <Button borderRadius={"full"}>
               <Icon as={Settings} marginRight={2} />
               Settings
