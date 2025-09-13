@@ -100,7 +100,7 @@ export default function Video({ apiKeys }) {
             });
             setTimeout(() => {
               showVideo(data.video_id);
-            }, 20000);
+            }, 60000);
           }
         })
         .catch((err) => {
