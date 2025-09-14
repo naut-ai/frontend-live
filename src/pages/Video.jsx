@@ -37,7 +37,6 @@ export default function Video({ apiKeys }) {
           content: data.video_content,
           metadata: data.metadata,
         });
-        console.log(video);
         setLoading({
           ...loading,
           isLoaded: true,
@@ -98,17 +97,17 @@ export default function Video({ apiKeys }) {
               isLoading: true,
               loadingText: "Processing video...",
             });
-            // setTimeout(() => {
-            //   showVideo(data.video_id);
-            // }, 30000);
-            const intervalId = setInterval(async () => {
-              if (video.src) {
-                clearInterval(intervalId);
-                console.log("🎉 Video is ready!");
-              } else {
-                await showVideo(data.video_id);
-              }
-            }, 30000);
+            setTimeout(() => {
+              showVideo(data.video_id);
+            }, 20000);
+            // const intervalId = setInterval(async () => {
+            //   if (video.src === "") {
+            //     await showVideo(data.video_id);
+            //   } else {
+            //     clearInterval(intervalId);
+            //     console.log("🎉 Video is ready!");
+            //   }
+            // }, 20000);
           }
         })
         .catch((err) => {

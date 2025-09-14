@@ -34,7 +34,7 @@ function Navbar() {
                 fontSize={"2xl"}
                 fontWeight={"bold"}
               >
-                Naut AI(v3.4)
+                Naut AI(v3.5)
               </Text>
             </Flex>
           </Link>
