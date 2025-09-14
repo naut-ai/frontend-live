@@ -18,7 +18,6 @@ export default function Video({ apiKeys }) {
   });
   const [prompt, setPrompt] = useState("");
   const [disabled, setDisabled] = useState(false);
-  //TODO: add backend url
   function showVideo(id) {
     const talk_id = id;
     fetch("https://nautai-backend.onrender.com/get_video", {
@@ -99,15 +98,8 @@ export default function Video({ apiKeys }) {
             });
             setTimeout(() => {
               showVideo(data.video_id);
-            }, 20000);
-            // const intervalId = setInterval(async () => {
-            //   if (video.src === "") {
-            //     await showVideo(data.video_id);
-            //   } else {
-            //     clearInterval(intervalId);
-            //     console.log("🎉 Video is ready!");
-            //   }
-            // }, 20000);
+              console.log("🎉 Video is ready!");
+            }, 5000);
           }
         })
         .catch((err) => {
