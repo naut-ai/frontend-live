@@ -98,13 +98,17 @@ export default function Video({ apiKeys }) {
               isLoading: true,
               loadingText: "Processing video...",
             });
+            // setTimeout(() => {
+            //   showVideo(data.video_id);
+            // }, 30000);
             const intervalId = setInterval(async () => {
-              await showVideo(data.video_id);
               if (video.src) {
                 clearInterval(intervalId);
                 console.log("🎉 Video is ready!");
+              } else {
+                await showVideo(data.video_id);
               }
-            }, 10000);
+            }, 30000);
           }
         })
         .catch((err) => {
