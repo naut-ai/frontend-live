@@ -96,8 +96,11 @@ export default function Video({ apiKeys }) {
               isLoading: true,
               loadingText: "Processing video...",
             });
-            setInterval(async () => {
-              await showVideo(data.video_id);
+            let fetchInterval = setInterval(async () => {
+              if (!video.src) await showVideo(data.video_id);
+              else {
+                clearInterval(fetchInterval);
+              }
             }, 10000);
           }
         })
