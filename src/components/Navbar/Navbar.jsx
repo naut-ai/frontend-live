@@ -43,7 +43,7 @@ function Navbar() {
                   textTransform={"lowercase"}
                   fontSize={"sm"}
                 >
-                  v4.1
+                  v4.2
                 </Badge>
               </Text>
             </Flex>

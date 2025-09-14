@@ -81,7 +81,7 @@ export default function Video({ apiKeys }) {
               title: "",
               subtitle: "",
               content: "",
-              metadata: "",
+              metadata: {},
             });
             setLoading({
               isLoading: false,
@@ -96,10 +96,8 @@ export default function Video({ apiKeys }) {
               isLoading: true,
               loadingText: "Processing video...",
             });
-            setTimeout(async () => {
+            setInterval(async () => {
               await showVideo(data.video_id);
-              console.log("🎉 Video is ready!");
-              console.log(video);
             }, 10000);
           }
         })
