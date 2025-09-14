@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Container,
@@ -34,7 +35,16 @@ function Navbar() {
                 fontSize={"2xl"}
                 fontWeight={"bold"}
               >
-                Naut AI(v3.9)
+                Naut AI
+                <Badge
+                  colorScheme="purple"
+                  fontFamily={"Inter"}
+                  marginLeft={2}
+                  textTransform={"lowercase"}
+                  fontSize={"sm"}
+                >
+                  v4.1
+                </Badge>
               </Text>
             </Flex>
           </Link>

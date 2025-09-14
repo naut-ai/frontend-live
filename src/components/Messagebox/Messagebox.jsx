@@ -52,7 +52,7 @@ function Messagebox({ video, loading }) {
           >
             <Text
               m={2}
-              fontSize={["lg", "2xl"]}
+              fontSize={["md", "lg", "2xl"]}
               fontWeight={"semibold"}
               fontFamily={"Inter"}
             >
@@ -104,7 +104,7 @@ function Messagebox({ video, loading }) {
                           fontSize="lg"
                           fontFamily={"Inter"}
                         >
-                          Study the way you like!
+                          Study better with Naut!
                         </Text>
                       ) : (
                         <video
