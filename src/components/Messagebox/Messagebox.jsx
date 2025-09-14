@@ -203,8 +203,8 @@ function Messagebox({ video, loading }) {
             <Spinner mx={2} marginBottom={"-5px"} position={"relative"} />
             {`${loading.loadingText} ${
               loading.loadingText === "Processing video..."
-                ? `(${elapsed}s)`
-                : `This may take few minutes!`
+                ? `This may take few minutes`
+                : `(${elapsed}s)`
             }`}
           </Text>
         )}
