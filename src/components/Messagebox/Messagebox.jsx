@@ -57,17 +57,16 @@ function Messagebox({ video, loading }) {
               fontFamily={"Inter"}
             >
               {video.title}
+              <Badge
+                colorScheme="purple"
+                fontFamily={"Inter"}
+                marginLeft={2}
+                fontSize={"sm"}
+                textTransform={"lowercase"}
+              >
+                {video.id}
+              </Badge>
             </Text>
-            <Badge
-              colorScheme="purple"
-              fontFamily={"Inter"}
-              mx={2}
-              mb={3}
-              fontSize={"sm"}
-              textTransform={"lowercase"}
-            >
-              {video.id}
-            </Badge>
             <Tabs
               isFitted
               variant="soft-rounded"

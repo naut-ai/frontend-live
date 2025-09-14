@@ -9,7 +9,7 @@ export default function Video({ apiKeys }) {
     src: "",
     subtitle: "",
     content: "",
-    metadata: "",
+    metadata: {},
   });
   const [loading, setLoading] = useState({
     isLoading: false,
@@ -18,7 +18,7 @@ export default function Video({ apiKeys }) {
   });
   const [prompt, setPrompt] = useState("");
   const [disabled, setDisabled] = useState(false);
-  function showVideo(id) {
+  async function showVideo(id) {
     const talk_id = id;
     fetch("https://nautai-backend.onrender.com/get_video", {
       method: "POST",
@@ -46,7 +46,7 @@ export default function Video({ apiKeys }) {
       });
   }
 
-  function askVideo(question) {
+  async function askVideo(question) {
     setVideo({
       ...video,
       id: "",
@@ -54,7 +54,7 @@ export default function Video({ apiKeys }) {
       title: "",
       subtitle: "",
       content: "",
-      metadata: "",
+      metadata: {},
     });
     setDisabled(true);
     setLoading({
@@ -96,10 +96,11 @@ export default function Video({ apiKeys }) {
               isLoading: true,
               loadingText: "Processing video...",
             });
-            setTimeout(() => {
-              showVideo(data.video_id);
+            setTimeout(async () => {
+              await showVideo(data.video_id);
               console.log("🎉 Video is ready!");
-            }, 5000);
+              console.log(video);
+            }, 10000);
           }
         })
         .catch((err) => {
@@ -111,8 +112,8 @@ export default function Video({ apiKeys }) {
     }
   }
 
-  const handleData = () => {
-    askVideo(prompt);
+  const handleData = async () => {
+    await askVideo(prompt);
   };
 
   return (
